@@ -17,12 +17,14 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
 // Connect DB & Start Server
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => {
-    console.log("MongoDB Connected");
-    app.listen(process.env.PORT || 5000, () => {
-        console.log(`Server running on port ${process.env.PORT}`);
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI;
+
+mongoose.connect(MONGO_URI)
+  .then(() => {
+    console.log("✅ MongoDB Connected");
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
     });
-}).catch(err => console.error("DB Connection Error:", err));
+  })
+  .catch(err => console.error("❌ DB Connection Error:", err));
